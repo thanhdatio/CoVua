@@ -225,7 +225,7 @@ const backButton = (ctrl: CoordinateTrainerCtrl): VNode =>
   h('div.back', h('a.back-button', { hook: bind('click', ctrl.stop) }, `« ${ctrl.trans('back')}`));
 
 const settings = (ctrl: CoordinateTrainerCtrl): VNode => {
-  const { trans, redraw, showCoordinates, showPieces } = ctrl;
+  const { trans, redraw, showCoordinates, showCoordsOnAllSquares, showPieces } = ctrl;
   return h('div.settings', [
     ctrl.mode() === 'findSquare'
       ? toggle(
@@ -242,6 +242,17 @@ const settings = (ctrl: CoordinateTrainerCtrl): VNode => {
     ...filesAndRanksSelection(ctrl),
     toggle(
       { name: 'showCoordinates', id: 'showCoordinates', checked: showCoordinates(), change: showCoordinates },
+      trans,
+      redraw,
+    ),
+    toggle(
+      {
+        name: 'showCoordsOnAllSquares',
+        id: 'showCoordsOnAllSquares',
+        checked: showCoordsOnAllSquares(),
+        change: showCoordsOnAllSquares,
+        disabled: !ctrl.showCoordinates(),
+      },
       trans,
       redraw,
     ),
